@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HighLife DC -- Studio Finance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f7f6f3;
+      --surface: rgba(255, 255, 255, 0.72);
+      --surface-solid: #ffffff;
+      --surface-hover: rgba(255, 255, 255, 0.9);
+      --border: rgba(0, 0, 0, 0.06);
+      --border-strong: rgba(0, 0, 0, 0.1);
+      --text: #1a1a1a;
+      --text-secondary: #6b6b6b;
+      --text-tertiary: #999999;
+      --accent: #8B7355;
+      --accent-light: rgba(139, 115, 85, 0.08);
+      --accent-hover: #7a6349;
+      --black: #1a1a1a;
+      --black-hover: #333333;
+      --success: #2d8a4e;
+      --success-bg: rgba(45, 138, 78, 0.08);
+      --danger: #c53030;
+      --danger-bg: rgba(197, 48, 48, 0.06);
+      --radius: 14px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    body {
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 20px 20px 140px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 40px 0 32px;
+    }
+
+    header .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: var(--black);
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    header .logo-mark span {
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    header h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+
+    header p {
+      font-size: 14px;
+      color: var(--text-tertiary);
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    /* Tab Toggle */
+    .tab-toggle {
+      display: flex;
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 50px;
+      padding: 4px;
+      margin-bottom: 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-toggle button {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      background: transparent;
+      color: var(--text-tertiary);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Manrope', sans-serif;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .tab-toggle button.active {
+      background: var(--black);
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .tab-toggle button:not(.active):hover {
+      color: var(--text-secondary);
+    }
+
+    /* Form Card */
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }
+
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Fields */
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 15px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b6b6b'%3E%3Cpath d='M6 8.5L1 3.5h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 72px;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: var(--text-tertiary);
+      font-weight: 400;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .row .field {
+      flex: 1;
+    }
+
+    .field-computed input {
+      background: var(--accent-light);
+      border-style: dashed;
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-tertiary);
+      margin-bottom: 14px;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--black);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Manrope', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 8px;
+      letter-spacing: 0.2px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    .submit-btn:hover {
+      background: var(--black-hover);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0) scale(0.99);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Manrope', sans-serif;
+      z-index: 1000;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.success {
+      background: var(--success);
+      color: white;
+    }
+
+    .toast.error {
+      background: var(--danger);
+      color: white;
+    }
+
+    /* Manage Sessions */
+    .manage-section {
+      margin-top: 24px;
+    }
+
+    .manage-toggle {
+      width: 100%;
+      padding: 14px;
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Manrope', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .manage-toggle:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+      border-color: var(--border-strong);
+    }
+
+    .sessions-list {
+      margin-top: 16px;
+      display: none;
+    }
+
+    .sessions-list.open {
+      display: block;
+    }
+
+    .session-card {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .session-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-strong);
+    }
+
+    .session-card .session-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .session-card .session-date {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-weight: 600;
+    }
+
+    .session-card .session-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .session-card .session-details {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-top: 2px;
+    }
+
+    .session-card .session-total {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+
+    .session-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .session-actions button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Manrope', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-delete {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    .btn-delete:hover {
+      background: rgba(197, 48, 48, 0.12);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-tertiary);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-tertiary);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Confirm Dialog */
+    .confirm-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .confirm-overlay.show {
+      display: flex;
+    }
+
+    .confirm-dialog {
+      background: var(--surface-solid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      max-width: 340px;
+      width: 90%;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .confirm-dialog p {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .confirm-dialog .confirm-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .confirm-dialog .confirm-actions button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Manrope', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cancel {
+      background: var(--bg);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-cancel:hover {
+      background: #eee;
+    }
+
+    .btn-confirm-delete {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-confirm-delete:hover {
+      background: #b42b2b;
+    }
+
+    /* Autocomplete */
+    .autocomplete-wrapper {
+      position: relative;
+    }
+
+    .autocomplete-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--surface-solid);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      max-height: 180px;
+      overflow-y: auto;
+      z-index: 50;
+      display: none;
+      margin-top: 4px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .autocomplete-list.open {
+      display: block;
+    }
+
+    .autocomplete-item {
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      transition: all 0.15s ease;
+    }
+
+    .autocomplete-item:last-child {
+      border-bottom: none;
+    }
+
+    .autocomplete-item:hover,
+    .autocomplete-item.active {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 400px) {
+      .container { padding: 16px 16px 140px; }
+      header { padding: 32px 0 24px; }
+      header h1 { font-size: 22px; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="logo-mark"><span>HL</span></div>
+    <h1>HighLife DC Studio</h1>
+    <p>Session Booking Log</p>
+  </header>
+
+  <div class="tab-toggle">
+    <button class="active" onclick="switchTab('music')" id="tab-music">Music Studio</button>
+    <button onclick="switchTab('podcast')" id="tab-podcast">Podcast</button>
+  </div>
+
+  <!-- MUSIC STUDIO FORM -->
+  <form id="form-music" class="form-section active" onsubmit="return submitForm(event, 'music')">
+    <div class="card">
+      <div class="field">
+        <label>Date</label>
+        <input type="date" name="date" required>
+      </div>
+
+      <div class="field autocomplete-wrapper">
+        <label>Artist</label>
+        <input type="text" name="artist" placeholder="Artist name" required autocomplete="off" oninput="showSuggestions(this, 'names')" onfocus="showSuggestions(this, 'names')">
+        <div class="autocomplete-list" id="ac-music-artist"></div>
+      </div>
+
+      <div class="field">
+        <label>Session Type</label>
+        <select name="type" required>
+          <option value="">Select type</option>
+          <option value="Recording">Recording</option>
+          <option value="Mixing">Mixing</option>
+          <option value="Mastering">Mastering</option>
+          <option value="BYOE">BYOE</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Hours Booked</label>
+          <input type="number" name="hours" step="0.5" min="0" placeholder="0">
+        </div>
+        <div class="field">
+          <label>Rate ($/hr)</label>
+          <input type="number" name="rate" step="0.01" min="0" placeholder="0">
+        </div>
+      </div>
+
+      <div class="field autocomplete-wrapper">
+        <label>Engineer</label>
+        <input type="text" name="engineer" placeholder="Engineer name" autocomplete="off" oninput="showSuggestions(this, 'engineers')" onfocus="showSuggestions(this, 'engineers')">
+        <div class="autocomplete-list" id="ac-music-engineer"></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Additional Costs</div>
+
+      <div class="row">
+        <div class="field">
+          <label>Mixing & Mastering</label>
+          <input type="number" name="mixingMastering" step="0.01" min="0" placeholder="0">
+        </div>
+        <div class="field">
+          <label>Production</label>
+          <input type="number" name="production" step="0.01" min="0" placeholder="0">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Totals</div>
+
+      <div class="row">
+        <div class="field field-computed">
+          <label>Total ($)</label>
+          <input type="number" name="total" step="0.01" min="0" placeholder="Auto-calculated">
+        </div>
+        <div class="field">
+          <label>Profit After Payout</label>
+          <input type="number" name="profit" step="0.01" placeholder="0">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Notes</label>
+        <textarea name="notes" placeholder="Optional session notes..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Log Session</button>
+    </div>
+  </form>
+
+  <div class="manage-section" id="manage-music">
+    <button type="button" class="manage-toggle" onclick="toggleSessions('music')">View Recent Sessions</button>
+    <div class="sessions-list" id="sessions-music"></div>
+  </div>
+
+  <!-- PODCAST FORM -->
+  <form id="form-podcast" class="form-section" onsubmit="return submitForm(event, 'podcast')">
+    <div class="card">
+      <div class="field">
+        <label>Date</label>
+        <input type="date" name="date" required>
+      </div>
+
+      <div class="field autocomplete-wrapper">
+        <label>Client Name</label>
+        <input type="text" name="clientName" placeholder="Client name" required autocomplete="off" oninput="showSuggestions(this, 'names')" onfocus="showSuggestions(this, 'names')">
+        <div class="autocomplete-list" id="ac-podcast-client"></div>
+      </div>
+
+      <div class="field">
+        <label>Session Type</label>
+        <select name="type" required>
+          <option value="">Select type</option>
+          <option value="3 Camera AV">3 Camera AV</option>
+          <option value="2 Camera AV">2 Camera AV</option>
+          <option value="Audio Only">Audio Only</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Hours Booked</label>
+          <input type="number" name="hours" step="0.5" min="0" placeholder="0">
+        </div>
+        <div class="field">
+          <label>Rate ($/hr)</label>
+          <input type="number" name="rate" step="0.01" min="0" placeholder="0">
+        </div>
+      </div>
+
+      <div class="field autocomplete-wrapper">
+        <label>Engineer</label>
+        <input type="text" name="engineer" placeholder="Engineer name" autocomplete="off" oninput="showSuggestions(this, 'engineers')" onfocus="showSuggestions(this, 'engineers')">
+        <div class="autocomplete-list" id="ac-podcast-engineer"></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Additional Costs</div>
+
+      <div class="row">
+        <div class="field">
+          <label>Editing</label>
+          <input type="number" name="editing" step="0.01" min="0" placeholder="0">
+        </div>
+        <div class="field">
+          <label>Mixing & Mastering</label>
+          <input type="number" name="mixingMastering" step="0.01" min="0" placeholder="0">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Totals</div>
+
+      <div class="row">
+        <div class="field field-computed">
+          <label>Total ($)</label>
+          <input type="number" name="total" step="0.01" min="0" placeholder="Auto-calculated">
+        </div>
+        <div class="field">
+          <label>Profit After Payout</label>
+          <input type="number" name="profit" step="0.01" placeholder="0">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Notes</label>
+        <textarea name="notes" placeholder="Optional session notes..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Log Session</button>
+    </div>
+  </form>
+
+  <div class="manage-section" id="manage-podcast" style="display:none;">
+    <button type="button" class="manage-toggle" onclick="toggleSessions('podcast')">View Recent Sessions</button>
+    <div class="sessions-list" id="sessions-podcast"></div>
+  </div>
+</div>
+
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-dialog">
+    <p id="confirm-text">Delete this session?</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-confirm-delete" id="confirm-btn" onclick="confirmAction()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Autocomplete data
+  let acData = { names: [], engineers: [] };
+
+  async function loadAutocomplete() {
+    try {
+      const res = await fetch('/api/autocomplete');
+      acData = await res.json();
+    } catch (e) { /* silent */ }
+  }
+  loadAutocomplete();
+
+  function showSuggestions(input, field) {
+    const list = input.parentElement.querySelector('.autocomplete-list');
+    const val = input.value.toLowerCase().trim();
+    if (!val) { list.classList.remove('open'); return; }
+
+    const items = (acData[field] || []).filter(n => n.toLowerCase().includes(val));
+    if (items.length === 0) { list.classList.remove('open'); return; }
+
+    list.innerHTML = items.map(n =>
+      `<div class="autocomplete-item" onmousedown="selectSuggestion(this, '${n.replace(/'/g, "\\'")}')">${n}</div>`
+    ).join('');
+    list.classList.add('open');
+  }
+
+  function selectSuggestion(el, value) {
+    const wrapper = el.closest('.autocomplete-wrapper');
+    const input = wrapper.querySelector('input');
+    input.value = value;
+    wrapper.querySelector('.autocomplete-list').classList.remove('open');
+  }
+
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.autocomplete-list').forEach(l => {
+      if (!l.parentElement.contains(e.target)) l.classList.remove('open');
+    });
+  });
+
+  // Set default dates to today
+  const today = new Date().toISOString().split('T')[0];
+  document.querySelectorAll('input[type="date"]').forEach(el => el.value = today);
+
+  // Tab switching
+  function switchTab(tab) {
+    document.getElementById('tab-music').classList.toggle('active', tab === 'music');
+    document.getElementById('tab-podcast').classList.toggle('active', tab === 'podcast');
+    document.getElementById('form-music').classList.toggle('active', tab === 'music');
+    document.getElementById('form-podcast').classList.toggle('active', tab === 'podcast');
+    document.getElementById('manage-music').style.display = tab === 'music' ? 'block' : 'none';
+    document.getElementById('manage-podcast').style.display = tab === 'podcast' ? 'block' : 'none';
+  }
+
+  // Auto-calculate totals
+  function setupAutoCalc(formId, extraFields) {
+    const form = document.getElementById(formId);
+    const inputs = ['hours', 'rate', ...extraFields];
+    inputs.forEach(name => {
+      const el = form.querySelector(`[name="${name}"]`);
+      if (el) el.addEventListener('input', () => recalcTotal(form, extraFields));
+    });
+  }
+
+  function recalcTotal(form, extraFields) {
+    const hours = parseFloat(form.querySelector('[name="hours"]').value) || 0;
+    const rate = parseFloat(form.querySelector('[name="rate"]').value) || 0;
+    let extras = 0;
+    extraFields.forEach(f => {
+      extras += parseFloat(form.querySelector(`[name="${f}"]`).value) || 0;
+    });
+    const total = (hours * rate) + extras;
+    form.querySelector('[name="total"]').value = total > 0 ? total.toFixed(2) : '';
+  }
+
+  setupAutoCalc('form-music', ['mixingMastering', 'production']);
+  setupAutoCalc('form-podcast', ['editing', 'mixingMastering']);
+
+  // Toast
+  function showToast(message, type) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast ' + type + ' show';
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // Submit
+  async function submitForm(event, tab) {
+    event.preventDefault();
+    const form = event.target;
+    const btn = form.querySelector('.submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Logging...';
+
+    const data = Object.fromEntries(new FormData(form));
+
+    if (tab === 'music') {
+      data.sessionType = 'Music Studio';
+    } else {
+      data.sessionType = 'Podcast';
+    }
+
+    try {
+      const res = await fetch('/api/log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        showToast('Session logged successfully', 'success');
+        form.reset();
+        form.querySelector('[name="date"]').value = today;
+        loadAutocomplete();
+        const listEl = document.getElementById('sessions-' + tab);
+        if (listEl && listEl.classList.contains('open')) {
+          loadSessions(tab);
+        }
+      } else {
+        showToast(result.error || 'Failed to log session', 'error');
+      }
+    } catch (err) {
+      showToast('Network error -- please try again', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Log Session';
+    }
+
+    return false;
+  }
+
+  // Manage Sessions
+  const musicHeaders = ['Date', 'Artist', 'Session Type', 'Hours', 'Rate', 'Engineer', 'Mix/Master', 'Production', 'Total', 'Profit', 'Notes'];
+  const podcastHeaders = ['Date', 'Client', 'Session Type', 'Hours', 'Rate', 'Engineer', 'Editing', 'Mix/Master', 'Total', 'Profit', 'Notes'];
+
+  function toggleSessions(tab) {
+    const listEl = document.getElementById('sessions-' + tab);
+    if (listEl.classList.contains('open')) {
+      listEl.classList.remove('open');
+    } else {
+      loadSessions(tab);
+    }
+  }
+
+  async function loadSessions(tab) {
+    const listEl = document.getElementById('sessions-' + tab);
+    const sessionType = tab === 'music' ? 'Music Studio' : 'Podcast';
+    listEl.innerHTML = '<div class="loading">Loading sessions...</div>';
+    listEl.classList.add('open');
+
+    try {
+      const res = await fetch('/api/sessions?type=' + encodeURIComponent(sessionType));
+      const data = await res.json();
+
+      if (!data.sessions || data.sessions.length === 0) {
+        listEl.innerHTML = '<div class="empty-state">No sessions logged yet</div>';
+        return;
+      }
+
+      listEl.innerHTML = data.sessions.map(s => {
+        const v = s.values;
+        const name = v[1] || 'Unknown';
+        const date = v[0] || '';
+        const type = v[2] || '';
+        const hours = v[3] || '';
+        const rate = v[4] || '';
+        const engineer = v[5] || '';
+        const total = v[8] || '';
+
+        return `
+          <div class="session-card" data-row="${s.rowIndex}" data-type="${sessionType}">
+            <div class="session-header">
+              <span class="session-date">${date}</span>
+              <span class="session-date">${type}</span>
+            </div>
+            <div class="session-name">${name}</div>
+            <div class="session-details">${hours}hrs @ $${rate}/hr | Engineer: ${engineer}</div>
+            <div class="session-total">$${total}</div>
+            <div class="session-actions">
+              <button class="btn-delete" onclick="promptDelete('${sessionType}', ${s.rowIndex}, '${name.replace(/'/g, "\\'")}', '${date}')">Delete</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } catch (err) {
+      listEl.innerHTML = '<div class="empty-state">Failed to load sessions</div>';
+    }
+  }
+
+  // Confirm dialog
+  let pendingAction = null;
+
+  function promptDelete(sessionType, rowIndex, name, date) {
+    document.getElementById('confirm-text').textContent = `Delete session for "${name}" on ${date}?`;
+    document.getElementById('confirm-overlay').classList.add('show');
+    pendingAction = { sessionType, rowIndex, tab: sessionType === 'Music Studio' ? 'music' : 'podcast' };
+  }
+
+  function closeConfirm() {
+    document.getElementById('confirm-overlay').classList.remove('show');
+    pendingAction = null;
+  }
+
+  async function confirmAction() {
+    if (!pendingAction) return;
+    const { sessionType, rowIndex, tab } = pendingAction;
+    closeConfirm();
+
+    try {
+      const res = await fetch('/api/session', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionType, rowIndex }),
+      });
+
+      if (res.ok) {
+        showToast('Session deleted', 'success');
+        loadSessions(tab);
+      } else {
+        const data = await res.json();
+        showToast(data.error || 'Failed to delete', 'error');
+      }
+    } catch (err) {
+      showToast('Network error', 'error');
+    }
+  }
+</script>
+
+</body>
+</html>
